@@ -1,0 +1,86 @@
+{% extends 'auctions/layout.html' %}
+{% block title %}{{ listing.title }} - ShopNest{% endblock %}
+{% block body %}
+<h2 class="item-de-heading">{{ listing.title }}</h2>
+
+<div class="item-details-container">
+    <div class="item-image">
+        <img src="{{ listing.img }}" alt="{{ listing.title }}" class="item-details-img" />
+        <div class="watchlist-btn">
+            <form method="post" action="{% url 'toggle_watchlist' listing.id %}">
+                {% csrf_token %}
+                <button type="submit" class="watch-btn">
+                    {% if listing in watchlist_items %}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 30 38" fill="none">
+                            <path d="M0.416687 37.75V4.41667C0.416687 3.27084 0.82502 2.28959 1.64169 1.47292C2.45835 0.656253 3.43891 0.248615 4.58335 0.250004H25.4167C26.5625 0.250004 27.5438 0.658337 28.3604 1.475C29.1771 2.29167 29.5847 3.27223 29.5834 4.41667V37.75L15 31.5L0.416687 37.75Z" fill="black"/>
+                        </svg>
+                    {% else %}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 50 50" fill="none">
+                            <path d="M10.4167 43.75V10.4167C10.4167 9.27084 10.825 8.28959 11.6417 7.47292C12.4584 6.65625 13.4389 6.24861 14.5834 6.25H35.4167C36.5625 6.25 37.5438 6.65834 38.3604 7.475C39.1771 8.29167 39.5847 9.27223 39.5834 10.4167V43.75L25 37.5L10.4167 43.75ZM14.5834 37.3958L25 32.9167L35.4167 37.3958V10.4167H14.5834V37.3958Z" fill="black"/>
+                        </svg>
+                    {% endif %}
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="item-description">
+        <p id="no-mar"><span class="xbold-txt">{{ listing.title }}</span></p>
+        <p class="descrption-class">
+            <span class="small-txt">{{ listing.description }}</span>
+        </p>
+        <p id="no-mar"><span class="no-of-bids">{{ listing.category }}</span></p>
+        <p>
+            <span class="bold-txt">Starting Bid: </span>{{ listing.starting_bid }}₹
+        </p>
+        <p><span class="bold-txt">Current Bid: </span>{{ highest_bid }}₹</p>
+
+        {% if not listing.is_active and listing.highest_bidder %}
+            {% if user.is_authenticated and user == listing.highest_bidder %}
+                <p class="bold-txt">Congratulations! You have won the bid.</p>
+            {% else %}
+                <p class="bold-txt">Winner: </span>{{ listing.highest_bidder.username }}</p>
+            {% endif %}
+        {% endif %}
+
+        <div class="bid-section">
+            {% if user.is_authenticated and user == listing.creator %}
+                <form method="post" action="{% url 'close_auction' listing.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="Close-btn Bid-btn">Close Auction</button>
+                </form>
+            {% else %}
+                <form
+                  method="post"
+                  action="{% url 'item_details' listing.id %}"
+                  class="bid-form"
+                >
+                  {% csrf_token %}
+                  {% if listing.is_active %}
+                    <input
+                      type="number"
+                      name="bid_amount"
+                      step="0.01"
+                      required
+                      placeholder="Enter your bid amount:"
+                      class="bid-sub-input"
+                    />
+                    <button type="submit" class="Bid-btn">Place Bid</button>
+                  {% endif %}
+                </form>
+            {% endif %}
+            <p class="no-of-bids">Number of Bids: {{ num_bids }}</p>
+            {% if user.is_authenticated and user == listing.creator %}
+                <p>
+                    <span class="bold-txt">Highest Bidder:</span> {%if highest_bidder%}{{highest_bidder.username}}{%else%}No bids yet{%endif%}
+                </p>
+                <ul>
+                    {% for bid in bids %}
+                        <li>{{ bid.bidder.username }} - {{ bid.bid_amount }}₹</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

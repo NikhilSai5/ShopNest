@@ -1,0 +1,35 @@
+{% extends 'auctions/layout.html' %}
+{% block title %}Bid History - ShopNest{% endblock %}
+{% block body %}
+
+<h2 class="category-heading">Your Bid History</h2>
+
+{% if user_winning_bids %}
+<div class="watchlist-container">
+
+    {% for bid in user_winning_bids %}
+            
+            <div class="watch-item">
+            
+                <div class="watch-img-container">
+                    <img src="{{ bid.listing.img }}" alt="{{ bid.listing.title }}" class="watch-img">
+                </div>
+                <div class="watch-des">
+                     <span class="watch-title">{{ bid.listing.title }}</span>
+                    <span class="watch-cat">{{ bid.listing.category }}</span>
+                   
+                    <span class="watch-bid"><span class="watch-bid-head">Winning Bid: </span>{{ bid.bid_amount }}₹</span>
+                    
+                </div>
+                
+            
+            </div>
+        {% endfor %}
+</div>
+        
+    
+{% else %}
+    <p>You haven't won any bids yet.</p>
+{% endif %}
+
+{% endblock %}

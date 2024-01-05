@@ -1,0 +1,41 @@
+{% extends "auctions/layout.html" %} {% load static %} {% block title %} index
+{% endblock %} {%block body %}
+<div class="hero-container">
+  <div class="hero-img">
+    <!-- <h2>Welcome, {{ user_name }}!</h2> -->
+   
+      <div class="hero-text">
+          Bid, Win, Enjoy: Elevate Your Shopping Experience!
+      </div>
+      <a href="#your-bidding-section" class="cta-button">Start Bidding</a>
+
+  </div>
+</div>
+
+  <div class="ActiveListings">
+    {% for listing in active_listings %}
+      <div class="list-container ">
+        <div class="{% if not listing.is_active %}inactive-listing{% endif %}">
+          <a href="{% url 'item_details' listing.id %}">
+            <div class="list-img">
+              <img src="{{ listing.img }}" alt="" class="img-props">
+            </div>
+          </a>
+          
+          <div class="list-text">
+            <div class="list-head">
+              <span class="list-title">{{ listing.title }}</span>
+            </div>
+            <div class="list-price">
+              <span class="list-current-bid"><span class="curr">Current Bid:</span> <span>{{ listing.current_highest_bid }}₹</span></span>
+              <span class="list-starting-bid"><span class="start">Starting Bid:</span> <span>{{ listing.starting_bid }}₹</span></span>
+              <button class="Bid-btn">Bid</button>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

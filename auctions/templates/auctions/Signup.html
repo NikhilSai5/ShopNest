@@ -1,0 +1,35 @@
+{% extends "auctions/layout.html" %} {% load static %} {% block title %} Sign In
+{% endblock %} {% block body %}
+<div class="login-container">
+  <form method="post" class="form1">
+    <h2 class="heading">Sign Up</h2>
+    {% csrf_token %}
+    <div class="input1">
+      <label for="{{ form.username.id_for_label }}" class="custom-label"
+        >Username:</label
+      >
+      {{ form.username }}
+    </div>
+    <div class="input1">
+      <label for="{{ form.email.id_for_label }}" class="custom-label"
+        >Email:</label
+      >
+      {{ form.email }}
+    </div>
+    <div class="input1">
+      <label for="{{ form.password.id_for_label }}" class="custom-label"
+        >Password:</label
+      >
+      {{ form.password1 }}
+    </div>
+    <div class="input1">
+      <label for="{{ form.ConfirmPassword.id_for_label }}" class="custom-label"
+        >Confirm Password:</label
+      >
+      {{ form.password2 }}
+    </div>
+    <button type="submit" class="btn">Sign Up</button>
+  </form>
+</div>
+
+{% endblock %}

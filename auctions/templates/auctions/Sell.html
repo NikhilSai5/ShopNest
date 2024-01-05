@@ -1,0 +1,43 @@
+<!-- sell.html -->
+{% extends "auctions/layout.html" %} {% load static %} {% block title %} Sell
+{%endblock %} {% block body%}
+<div class="sell-container">
+  <h1 class="sell-heading">Sell you Item</h1>
+  <form method="post" action="{% url 'create_listing' %}" class="sell-form">
+    {% csrf_token %}
+    <div class="title-con sell-con">
+      <label for="title" class="sell-labels">Title: </label>
+      <input type="text" name="title" class="sell-input" />
+    </div>
+    <div class="description-con sell-con">
+      <label for="description" class="sell-labels">Description: </label>
+      <textarea
+        name="description"
+        id=""
+        cols="30"
+        rows="10"
+        class="sell-input"
+      ></textarea>
+    </div>
+    <div class="starting-bid sell-con">
+      <label for="starting_bid" class="sell-labels">Starting Bid: </label>
+      <input type="text" name="starting_bid" class="sell-input" />
+    </div>
+    <div class="img-input sell-con">
+      <label for="img" class="sell-labels">Image: </label>
+      <input type="text" name="img" class="sell-input" />
+    </div>
+    <div class="category sell-con">
+      <label for="category" class="cat-label sell-labels">Category:</label>
+      <select name="category" class="sell-select">
+        <option value="electronics">Electronics</option>
+        <option value="clothing">Clothing</option>
+        <option value="footwear">Footwear</option>
+        <option value="home_and_furniture">Home and Furniture</option>
+        <option value="antique">Antique</option>
+      </select>
+    </div>
+    <button type="submit" class="sell-btn Bid-btn">Submit</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'auctions/layout.html' %} {% block title %}{{ category }}
+Listings-ShopNest{%endblock %} {% block body %}
+<h2 class="category-heading">{{ category }} Listings</h2>
+<div class="ActiveListings">
+  {% for listing in listings %}
+  <div class="list-container">
+    <div class="{% if not listing.is_active %}inactive-listing{% endif %}">
+      <a href="{% url 'item_details' listing.id %}">
+        <div class="list-img">
+          <img src="{{ listing.img }}" alt="" class="img-props" />
+        </div>
+      </a>
+
+      <div class="list-text">
+        <div class="list-head">
+          <span class="list-title">{{ listing.title }}</span>
+        </div>
+        <div class="list-price">
+          <span class="list-current-bid"
+            ><span class="curr">Current Bid:</span>
+            <span>{{ listing.current_highest_bid }}₹</span></span
+          >
+          <span class="list-starting-bid"
+            ><span class="start">Starting Bid:</span>
+            <span>{{ listing.starting_bid }}₹</span></span
+          >
+          <button class="Bid-btn">Bid</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% if not listings %}
+<p class="category-no">No listings available for {{ category }}.</p>
+{% endif %} {% endblock %}
