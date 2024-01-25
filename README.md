@@ -12,9 +12,9 @@ The project aimed to create an interactive e-commerce platform where users can n
 to start the project first install django -
 ``pip install Django``
 
-then navigate to the **Ecommerce** folder in `cmd` then run the following command - 
-``python manage.py makemigrations``
-``python manage.py migrate``
-``python managee.py runserver``
+then navigate to the **Ecommerce** folder in _cmd_ then run the following command : 
+- ``python manage.py makemigrations``
+- ``python manage.py migrate``
+- ``python managee.py runserver``
 
 now the web site will open in ``127.0.0.1:8000`` port
